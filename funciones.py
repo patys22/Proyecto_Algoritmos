@@ -45,9 +45,19 @@ def mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes):
         planeta.show(listaEpisodios, listaOrigen)
 
 #funcion para mostrar el menu 4
-def buscar_personajes(self):
-    None
-    
+def buscar_personajes(listaPersonaje, personaje_ingresado):
+    personajes = []
+    for personaje in listaPersonaje:
+        if personaje_ingresado.lower() in personaje.nombre.lower():
+            for personaje.nombre in listaPersonaje:
+                return personaje.url
+            print(personaje.url)
+            
+            '''personajes.append(personaje)
+            return personajes'''
+
+
+
 
 
 

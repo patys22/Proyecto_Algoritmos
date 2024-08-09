@@ -1,5 +1,5 @@
 from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta
-from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas
+from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas, buscar_personajes
 
 class App:
     def start(self):
@@ -19,7 +19,8 @@ class App:
             if menu==3:
                 mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
             if menu==4:
-                None
+                personaje_ingresado = input("Ingrese el nombre del personaje que desea buscar: ")
+                busqueda = buscar_personajes(listaPersonajes, personaje_ingresado)
             if menu==5:
                 None
             if menu==6:
