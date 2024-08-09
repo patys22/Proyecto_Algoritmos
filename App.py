@@ -1,4 +1,4 @@
-from funciones import cargarPelis
+from infoAPI import cargarPelis
 
 class App:
     def start(self):

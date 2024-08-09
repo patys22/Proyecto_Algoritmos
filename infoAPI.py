@@ -4,6 +4,8 @@ from Peliculas import Pelicula
 from Naves import Nave
 from Vehiculos import Vehiculo
 from Planeta import Planeta
+from Especies import Especie
+from Personajes import Personaje
 
 def cargarPelis(): #esta funcion me permite acceder a la info de la api de peliculas
     listaPeliculas = []
@@ -67,7 +69,33 @@ def cargarPlaneta(): #esta funcion permite entrar en la api de planeta
     return listaPlaneta
 
 def especies():
-    None
+    listaEspecies = []
+    especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=90').json()
+    for results in especiesdb['results']:
+        especiesInfo = rq.get(results['url']).json()
+        nombre = especiesInfo['result']['properties']['name']
+        clasificacion = especiesInfo['result']['properties']['classification']
+        planetaOrigen = especiesInfo['result']['properties']['homeworld']
+        lenguaMaterna = especiesInfo['result']['properties']['language']
+        personajeEspecie = especiesInfo['result']['properties']['people']
+        nuevaEspecie=Especie(nombre, clasificacion, planetaOrigen, lenguaMaterna, personajeEspecie)
+        listaEspecies.append(nuevaEspecie)
+    return listaEspecies
+
+def personajes():
+    listaPersonajes = []
+    personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=90').json()
+    for results in personajesdb['results']:
+        especiesInfo = rq.get(results['url']).json()
+        nombre = especiesInfo['result']['properties']['name']
+        genero = especiesInfo['result']['properties']['classification']
+        planetaOrigen = especiesInfo['result']['properties']['homeworld']
+        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero)
+        listaPersonajes.append(nuevoPersonaje)
+    return listaPersonajes
+
+
+    
 
 
     
