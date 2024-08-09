@@ -18,5 +18,5 @@ class Pelicula:
         print(f"El numero de episodio es: {self.id_episodio}")
         print(f"La fecha de lanzamiento es: {self.lanzamiento}")
         print(f"El director es: {self.director}")
-        print(f"La frase de inicio es: {self.opening_crawl}\n")
+        print(f"La frase de inicio es: \n{self.opening_crawl}\n")
         

@@ -64,35 +64,41 @@ def cargarPlaneta(): #esta funcion permite entrar en la api de planeta
         periodoRotacion = planetaInfo['result']['properties']['orbital_period']
         cantidadHabitantes = planetaInfo['result']['properties']['population']
         clima = planetaInfo['result']['properties']['climate']
-        nuevoPlaneta=Planeta(nombre, periodoOrbita, periodoRotacion, cantidadHabitantes, clima)
+        url = planetaInfo['result']['properties']['url']
+        nuevoPlaneta=Planeta(nombre, periodoOrbita, periodoRotacion, cantidadHabitantes, clima, url)
         listaPlaneta.append(nuevoPlaneta)
     return listaPlaneta
 
-def especies():
+def cargarEspecies(): #buscar caracteristicas de las especies
     listaEspecies = []
     especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=90').json()
     for results in especiesdb['results']:
         especiesInfo = rq.get(results['url']).json()
         nombre = especiesInfo['result']['properties']['name']
+        altura = especiesInfo['result']['properties']['average_height']
         clasificacion = especiesInfo['result']['properties']['classification']
         planetaOrigen = especiesInfo['result']['properties']['homeworld']
         lenguaMaterna = especiesInfo['result']['properties']['language']
         personajeEspecie = especiesInfo['result']['properties']['people']
-        nuevaEspecie=Especie(nombre, clasificacion, planetaOrigen, lenguaMaterna, personajeEspecie)
+        url = especiesInfo['result']['properties']['url']
+        nuevaEspecie=Especie(nombre, altura, clasificacion, planetaOrigen, lenguaMaterna, personajeEspecie,url)
         listaEspecies.append(nuevaEspecie)
     return listaEspecies
 
-def personajes():
+def cargarPersonajes(): #buscar caracteristicas de los personajes
     listaPersonajes = []
     personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=90').json()
     for results in personajesdb['results']:
         especiesInfo = rq.get(results['url']).json()
+        url = results['url']
         nombre = especiesInfo['result']['properties']['name']
-        genero = especiesInfo['result']['properties']['classification']
+        genero = especiesInfo['result']['properties']['gender']
         planetaOrigen = especiesInfo['result']['properties']['homeworld']
-        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero)
+        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url)
         listaPersonajes.append(nuevoPersonaje)
     return listaPersonajes
+
+
 
 
     

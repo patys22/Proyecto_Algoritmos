@@ -1,22 +1,23 @@
-from infoAPI import cargarPelis
+from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta
+from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas
 
 class App:
     def start(self):
 
         listaPeliculas = cargarPelis()
+        listaEspecies = cargarEspecies()
+        listaPersonajes = cargarPersonajes()
+        listaPlanetas = cargarPlaneta()
+
         while True:
             print("\n\t\tBienvenido al mundo de Star Wars\n")
             menu=int(input("Seleccione una opcion del menu:\n\n\t1. Ver peliculas de la saga\n\t2. Ver especies de seres vivos de la saga\n\t3. Ver planetas\n\t4. Buscar personaje\n\t5. Grafico de cantidad de personajes en cada planeta\n\t6. Graficos de caracteristicas de naves\n\t7. Estadisticas sobre naves\n\t8. Construir mision\n\t9. Modificar mision\n\t10. Visualizar misiones\n\t11. Guardar misiones\n\t12. Cargar misiones\n\t13. Salir\n\t----> "))
             if menu==1:
-                contador = 1
-                for pelicula in listaPeliculas:
-                    print(f'{contador}-.________________.')
-                    pelicula.show()
-                    contador += 1
+                mostrar_peliculas(listaPeliculas)
             if menu==2:
-                None
+                mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanetas)
             if menu==3:
-                None
+                mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
             if menu==4:
                 None
             if menu==5:
