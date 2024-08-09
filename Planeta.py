@@ -7,7 +7,7 @@ class Planeta:
         self.clima = clima 
         self.url = url
     
-    def show(self, listaEpisodios, listaHabitantes):
+    def show(self, listaEpisodios, listaOrigen):
         print(f"El nombre es: {self.nombre} ")
         print(f'El periodo de orbita es: {self.periodo_orbita}')
         print(f'El periodo de rotacion es: {self.periodo_rotacion}')
@@ -15,7 +15,7 @@ class Planeta:
         print('Los episodios en los que aparece este planeta son:')
         print(*listaEpisodios, sep = "\t\n")
         print('Los personajes que aparecen en este planeta son:')
-        print(*listaHabitantes, sep = "\t\n")
+        print(*listaOrigen, sep = "\t\n")
         print()
         
     

@@ -6,6 +6,7 @@ def mostrar_peliculas(listaPeliculas):
         pelicula.show()
         contador += 1
 
+# funcion para el mostrar las ultimas funciones del menu 2
 def mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanetas):
     print('Las especies de la saga Star Wars son:')
     for especie in listaEspecies:
@@ -28,19 +29,28 @@ def mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanet
                     listaEpisodios.append(pelicula.titulo)
         print(f'\n________________________________\n')
         especie.show(listaNombres, nombrePlaneta, listaEpisodios)
-
+    
+#funcion para mostrar las ultimas funciones del menu 3
 def mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes):
     for planeta in listaPlanetas:
         listaEpisodios = []
-        listaHabitantes = []
+        listaOrigen = []
         for pelicula in listaPeliculas:
             for urlPlaneta in pelicula.planetas:
                 if planeta.url == urlPlaneta:
                     listaEpisodios.append(pelicula.titulo)
         for personaje in listaPersonajes:
                 if personaje.planeta_origen == planeta.url:
-                    listaHabitantes.append(personaje.nombre)
-        planeta.show(listaEpisodios, listaHabitantes)
+                    listaOrigen.append(personaje.nombre)
+        planeta.show(listaEpisodios, listaOrigen)
+
+#funcion para mostrar el menu 4
+def buscar_personajes(self):
+    None
+    
+
+
+
     
 
 

@@ -36,9 +36,10 @@ def cargarNaves():
     navesdb = rq.get('https://www.swapi.tech/api/starships?page=1&limit=90').json()
     for results in navesdb['results']:
         naveInfo = rq.get(results["url"]).json()
+        nombre = naveInfo['result']['properties']['name']
         pilotos_naves = naveInfo['result']['properties']['pilots']
         url = naveInfo['result']['properties']['url']
-        nuevaNave = Nave(pilotos_naves, url)
+        nuevaNave = Nave(nombre, pilotos_naves, url)
         listaNaves.append(nuevaNave)
     return listaNaves
 
@@ -48,9 +49,10 @@ def cargarVehiculos():
     vehiculosdb = rq.get('https://www.swapi.tech/api/vehicles?page=1&limit=90').json()
     for results in vehiculosdb['results']:
         vehiculoInfo = rq.get(results["url"]).json()
+        nombre = vehiculoInfo['result']['properties']['name']
         pilotos_vehiculos = vehiculoInfo['result']['properties']['pilots']
         url = vehiculoInfo['result']['properties']['url']
-        nuevoVehiculo = Vehiculo(pilotos_vehiculos, url)
+        nuevoVehiculo = Vehiculo(nombre, pilotos_vehiculos, url)
         listaVehiculos.append(nuevoVehiculo)
     return listaVehiculos
 
