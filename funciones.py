@@ -71,6 +71,8 @@ def buscar_personajes(listaPersonaje, personaje_ingresado):
 
 
 
+
+
     
 
 
