@@ -96,7 +96,9 @@ def cargarPersonajes(): #buscar caracteristicas de los personajes
         nombre = especiesInfo['result']['properties']['name']
         genero = especiesInfo['result']['properties']['gender']
         planetaOrigen = especiesInfo['result']['properties']['homeworld']
-        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url)
+        uid = especiesInfo['result']['uid']
+
+        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url, uid)
         listaPersonajes.append(nuevoPersonaje)
     return listaPersonajes
 

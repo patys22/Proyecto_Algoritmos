@@ -19,8 +19,12 @@ class App:
             if menu==3:
                 mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
             if menu==4:
-                personaje_ingresado = input("Ingrese el nombre del personaje que desea buscar: ")
-                busqueda = buscar_personajes(listaPersonajes, personaje_ingresado)
+                while True:
+                    personaje_ingresado = input("\nIngrese el nombre del personaje que desea buscar y si desea salir del menu ingrese 0: \n---> ")
+                    if personaje_ingresado == "0":
+                        break
+                    else:
+                        busqueda = buscar_personajes(listaPersonajes, personaje_ingresado)
             if menu==5:
                 None
             if menu==6:

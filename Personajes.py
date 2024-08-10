@@ -1,10 +1,11 @@
 class Personaje:
-    def __init__(self, nombre, planeta_origen, genero, url):
+    def __init__(self, nombre, planeta_origen, genero, url, uid):
         self.nombre = nombre
         self.planeta_origen = planeta_origen
         self.genero = genero
         self.url =url
-    
+        self.uid =uid
+        
     def show(self):
         print(f'Su nombre es: {self.nombre}')
         print(f'Su planeta de origen es: {self.planeta_origen}')

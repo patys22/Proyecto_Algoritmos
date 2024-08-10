@@ -46,40 +46,29 @@ def mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes):
 
 #funcion para mostrar el menu 4
 def buscar_personajes(listaPersonaje, personaje_ingresado):
-    personajes = []
-    contador=1
+    personajes = {}
+    contador = 1 
     for personaje in listaPersonaje:
         personaje_nombre = personaje.nombre.lower()
         if personaje_ingresado.lower() in personaje_nombre:
             print(f'{contador}.- {personaje.nombre}')
-            contador+=1
-            personajes.append({contador: personaje})
-    menu_personajes = int(input('Selecciona el personaje del que quieres obtener informacion, escribe 0 para salir.'))
-    for p in personajes:
-        for key, value in p.items():
+            personajes[contador] =  personaje
+            contador += 1
+
+    aux = True
+    print(personajes)
+    while aux:
+        menu_personajes = int(input('\nSeleccione el personaje del que desea obtener informacion y si desea desea salir escriba 0: \n----> '))
+        for key, value in personajes.items():
+            print(key,value)
             if menu_personajes == key:
                 value.show()
                 break
             elif menu_personajes == 0:
+                aux = False
                 break
-            else:
-                print('Introduce un valor valido.')
-        break
-
-
-
-
-
-
-    
-
-
-
-
+        if aux:   
+            print('Introduzca un valor valido')
 
     
     
-
-
-
-        
