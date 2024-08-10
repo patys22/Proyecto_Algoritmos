@@ -73,7 +73,7 @@ def cargarPlaneta(): #esta funcion permite entrar en la api de planeta
 
 def cargarEspecies(): #buscar caracteristicas de las especies
     listaEspecies = []
-    especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=90').json()
+    especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=5').json()
     # print(especiesdb)
     for results in especiesdb['results']:
         # print(results['url'])

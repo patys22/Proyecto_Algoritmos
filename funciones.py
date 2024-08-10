@@ -48,12 +48,13 @@ def mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes):
         planeta.show(listaEpisodios, listaOrigen)
 
 #funcion para mostrar el menu 4
-def buscar_personajes(listaPersonaje, personaje_ingresado, listaPlanetas, listaPeliculas):
+def buscar_personajes(listaPersonaje, personaje_ingresado, listaNaves, listaPeliculas, listaEspecies, listaVehiculos):
     personajes = {}
     contador = 1 
-    listaPlanetas = []
-    listaNombres = []
+    listaNave = []
+    listaNombre = []
     listaEpisodios = []
+    listaVehiculo = []
     nombrePlaneta = None
     #planeta_personaje = especie.personaje_especie
     for personaje in listaPersonaje:
@@ -61,30 +62,41 @@ def buscar_personajes(listaPersonaje, personaje_ingresado, listaPlanetas, listaP
         
         #trae planeta origen del personaje 
         if personaje_ingresado.lower() in personaje_nombre:
-            personaje_planeta = rq.get(personaje.planeta_origen).json()
-            nombrePlaneta = personaje_planeta['result']['properties']['name']
-
-            for pelicula in listaPeliculas:
-                for urlPersonaje in pelicula.personajes:
-                    if personaje.url == urlPersonaje:
-                        listaEpisodios.append(pelicula.titulo)
-            personaje.show(listaEpisodios)
-            
-
-
-
             print(f'{contador}.- {personaje.nombre}')
             personajes[contador] =  personaje
             contador += 1
-       
+            personaje_planeta = rq.get(personaje.planeta_origen).json()
+            nombrePlaneta = personaje_planeta['result']['properties']['name'] #trae el nombre planeta de origen
+
+            for especie in listaEspecies: #trae la especie del personaje
+                for urlPersonaje in especie.personaje_especie:
+                    if personaje.url == urlPersonaje:
+                        listaNombre.append(especie.nombre)
+
+            for pelicula in listaPeliculas: #trae los nombres de las peliculas en las que sale ese personaje
+                for urlPersonaje in pelicula.personajes:
+                    if personaje.url == urlPersonaje:
+                        listaEpisodios.append(pelicula.titulo)
+            
+            for nave in listaNaves: # trae la nave de cada personaje
+                for urlPersonaje in nave.piloto_nave:
+                    if personaje.url == urlPersonaje:
+                        listaNave.append(nave.nombre)
+
+            for vehiculo in listaVehiculos: #trae el vehiculo de cada personaje 
+                for urlPersonaje in vehiculo.piloto_vehiculo:
+                    if personaje.url == urlPersonaje:
+                        listaVehiculo.append(vehiculo.nombre)
+            
+
     aux = True
     errorAux = True
     while aux:
-        menu_personajes = int(input('\nSeleccione el personaje del que desea obtener informacion y si desea desea salir escriba 0: \n----> '))
+        menu_personajes = int(input('\nSeleccione el numero del personaje del que desea obtener informacion y si desea desea salir escriba 0: \n----> '))
         for key, value in personajes.items():
             if menu_personajes == key:
-                value.show(nombrePlaneta)
-                errorAux: False
+                value.show(nombrePlaneta, listaNombre, listaEpisodios, listaNave, listaVehiculo)
+                errorAux= False
                 break
             elif menu_personajes == 0:
                 aux = False

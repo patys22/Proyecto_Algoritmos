@@ -1,4 +1,4 @@
-from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta
+from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta, cargarNaves, cargarVehiculos
 from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas, buscar_personajes
 
 class App:
@@ -15,40 +15,43 @@ class App:
             if menu==1:
                 listaPeliculas = cargarPelis()
                 mostrar_peliculas(listaPeliculas)
-            if menu==2:
+            elif menu==2:
                 # mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanetas)
                 None
-            if menu==3:
+            elif menu==3:
                 # mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
                 None
-            if menu==4:
-                listaPlanetas = [] #cargarPlaneta()
-                
+            elif menu==4:
+                listaPeliculas = cargarPelis()
                 listaPersonajes = cargarPersonajes()
+                listaEspecies = cargarEspecies()
+                listaNaves = cargarNaves()
+                listaVehiculos = cargarVehiculos()
                 while True:
                     personaje_ingresado = input("\nIngrese el nombre del personaje que desea buscar y si desea regresar al menu ingrese 0: \n---> ")
                     if personaje_ingresado == "0":
                         break
                     else:
-                        busqueda = buscar_personajes(listaPersonajes, personaje_ingresado, listaPlanetas, listaPeliculas)
+                        busqueda = buscar_personajes(listaPersonajes, personaje_ingresado, listaNaves, listaPeliculas, listaEspecies, listaVehiculos)
+                        
+                
+            elif menu==5:
                 None
-            if menu==5:
+            elif menu==6:
                 None
-            if menu==6:
+            elif menu==7:
                 None
-            if menu==7:
+            elif menu==8:
                 None
-            if menu==8:
+            elif menu==9:
                 None
-            if menu==9:
+            elif menu==10:
                 None
-            if menu==10:
+            elif menu==11:
                 None
-            if menu==11:
+            elif menu==12:
                 None
-            if menu==12:
-                None
-            if menu==13:
+            elif menu==13:
                 print("\nVuelva pronto y que la fuerza te acompane")
                 break
             elif menu > 13: 
