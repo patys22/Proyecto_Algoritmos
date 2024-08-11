@@ -10,13 +10,16 @@ class Personaje:
         print(f'\nSu nombre es: \n\t{self.nombre}')
         print(f'Su planeta de origen es: \n\t{nombrePlaneta}')
         print(f'Los titulos en los que aparecen son: ')
-        print(*listaEpisodios, sep = "\t\t\n")
+        for episodio in listaEpisodios:
+            print(f'\t{episodio}')
         print(f'Su genero es: \n\t{self.genero}')
         print(f'Su especie es: ')
-        print(*listaNombre, sep = "\t\t\n")
+        for especie in listaNombre:
+            print(f'\t{especie}')
         print(f'Las naves que utiliza son: ')
-        print(*listaNave, sep = "\t\t\n")
+        for nave in listaNave:
+            print(f'\t{nave}')
         print(f'Los vehiculos que utiliza son: ')
-        print(*listaVehiculo, sep = "\t\t\n")
-
+        for vehiculo in listaVehiculo:
+            print(f'\t{vehiculo}')
         
