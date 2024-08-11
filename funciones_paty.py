@@ -5,6 +5,7 @@ from Planeta_csv import Planeta_csv
 from Nave_csv import Nave_csv
 from Armas_csv import Armas_csv
 from Integrantes_csv import Integrantes_csv
+from Planetas import Planetas
 
 class App:
     usuarios_obj=[]
