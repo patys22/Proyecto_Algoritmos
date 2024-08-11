@@ -73,8 +73,10 @@ def cargarPlaneta(): #esta funcion permite entrar en la api de planeta
 
 def cargarEspecies(): #buscar caracteristicas de las especies
     listaEspecies = []
-    especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=90').json()
+    especiesdb = rq.get('https://www.swapi.tech/api/species?page=1&limit=5').json()
+    # print(especiesdb)
     for results in especiesdb['results']:
+        # print(results['url'])
         especiesInfo = rq.get(results['url']).json()
         nombre = especiesInfo['result']['properties']['name']
         altura = especiesInfo['result']['properties']['average_height']
@@ -87,16 +89,17 @@ def cargarEspecies(): #buscar caracteristicas de las especies
         listaEspecies.append(nuevaEspecie)
     return listaEspecies
 
-def cargarPersonajes(): #buscar caracteristicas de los personajes
+def cargarPersonajes(): #buscar caracteristicas de los personajes y toda la info que piden 
     listaPersonajes = []
-    personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=90').json()
+    personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=5').json()
     for results in personajesdb['results']:
-        especiesInfo = rq.get(results['url']).json()
+        personajeInfo = rq.get(results['url']).json()
         url = results['url']
-        nombre = especiesInfo['result']['properties']['name']
-        genero = especiesInfo['result']['properties']['gender']
-        planetaOrigen = especiesInfo['result']['properties']['homeworld']
-        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url)
+        nombre = personajeInfo['result']['properties']['name']
+        genero = personajeInfo['result']['properties']['gender']
+        planetaOrigen = personajeInfo['result']['properties']['homeworld']
+        uid = personajeInfo['result']['uid']
+        nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url, uid)
         listaPersonajes.append(nuevoPersonaje)
     return listaPersonajes
 

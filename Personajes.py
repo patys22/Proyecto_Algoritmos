@@ -1,17 +1,25 @@
 class Personaje:
-    def __init__(self, nombre, planeta_origen, genero, url):
+    def __init__(self, nombre, planeta_origen, genero, url, uid):
         self.nombre = nombre
         self.planeta_origen = planeta_origen
         self.genero = genero
         self.url =url
-    
-    def show(self):
-        print(f'Su nombre es: {self.nombre}')
-        print(f'Su planeta de origen es: {self.planeta_origen}')
+        self.uid =uid
+        
+    def show(self, nombrePlaneta, listaNombre, listaEpisodios, listaNave, listaVehiculo):
+        print(f'\nSu nombre es: \n\t{self.nombre}')
+        print(f'Su planeta de origen es: \n\t{nombrePlaneta}')
         print(f'Los titulos en los que aparecen son: ')
-        print(f'Su genero es: {self.genero}')
+        for episodio in listaEpisodios:
+            print(f'\t{episodio}')
+        print(f'Su genero es: \n\t{self.genero}')
         print(f'Su especie es: ')
+        for especie in listaNombre:
+            print(f'\t{especie}')
         print(f'Las naves que utiliza son: ')
+        for nave in listaNave:
+            print(f'\t{nave}')
         print(f'Los vehiculos que utiliza son: ')
-
+        for vehiculo in listaVehiculo:
+            print(f'\t{vehiculo}')
         
