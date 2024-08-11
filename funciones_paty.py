@@ -228,6 +228,19 @@ class App:
             else:
                 print("Opción inválida, intente de nuevo.")
 
+    def seleccionar_planeta_nuevo(self):
+        print("Seleccione el nuevo planeta destino:")
+        self.seleccionar_planeta()
+        print("Planeta cambiado exitosamente.")
+
+    def seleccionar_nave_nueva(self):
+        print("Seleccione la nueva nave a utilizar:")
+        self.seleccionar_nave()
+        print("Nave cambiada exitosamente.")
+
+    def seleccionar_armas_nuevas(self):
+        self.seleccionar_armas()
+
     def eliminar_armas(self, mision):
         print("\nArmas actuales en la misión:")
         contador = 1
@@ -239,59 +252,19 @@ class App:
         mision['armas'] = [arma for i, arma in enumerate(mision['armas']) if i not in indices]
         print("Armas eliminadas correctamente.")
 
-    def seleccionar_planeta_nuevo(self):
-        print("Seleccione el nuevo planeta destino:")
-        self.seleccionar_planeta()
-
-    def seleccionar_nave_nueva(self):
-        print("Seleccione la nueva nave a utilizar:")
-        self.seleccionar_nave()
-
-    def seleccionar_armas(self):
-        # Cargar armas desde el archivo
-        lista_armas = []
-        with open("weapons.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                arma = Armas_csv(row['id'], row['name'])
-                lista_armas.append(arma)
-        
-        # Mostrar armas y seleccionar algunas
-        print("Seleccione hasta 7 armas:")
-        for i, arma in enumerate(lista_armas):
-            print(f"{i + 1}. {arma.nombre}")
-        
-        indices_seleccionados = input("Ingrese los números de las armas que desea seleccionar, separados por comas: ").split(",")
-        armas_seleccionadas = [lista_armas[int(index) - 1] for index in indices_seleccionados if 0 < int(index) <= len(lista_armas)]
-
-        if len(armas_seleccionadas) > 7:
-            print("Solo puedes seleccionar hasta 7 armas.")
-            return self.seleccionar_armas()
-        
-        return armas_seleccionadas
+    def eliminar_integrantes(self, mision):
+        print("\nIntegrantes actualmente en la misión:")
+        contador = 1
+        for integrante in mision['integrante']:
+            print(f"{contador}. {integrante.nombre}")
+            contador += 1
+        indices = input("Ingrese los números de los integrantes que desea eliminar, separados por comas: ").split(",")
+        indices = [int(index) - 1 for index in indices if 0 <= int(index) - 1 < len(mision['integrantes'])]
+        mision['integrantes'] = [integrante for i, integrante in enumerate(mision['integrantes']) if i not in indices]
+        print("Integrantes eliminados correctamente.")
 
     def seleccionar_integrantes(self):
-        # Cargar integrantes desde el archivo
-        lista_integrantes = []
-        with open("characters.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                integrante = Integrantes_csv(row['id'], row['name'])
-                lista_integrantes.append(integrante)
-        
-        # Mostrar integrantes y seleccionar algunos
-        print("Seleccione hasta 7 integrantes:")
-        for i, integrante in enumerate(lista_integrantes):
-            print(f"{i + 1}. {integrante.nombre}")
-        
-        indices_seleccionados = input("Ingrese los números de los integrantes que desea seleccionar, separados por comas: ").split(",")
-        integrantes_seleccionados = [lista_integrantes[int(index) - 1] for index in indices_seleccionados if 0 < int(index) <= len(lista_integrantes)]
-
-        if len(integrantes_seleccionados) > 7:
-            print("Solo puedes seleccionar hasta 7 integrantes.")
-            return self.seleccionar_integrantes()
-        
-        return integrantes_seleccionados
+        self.seleccionar_integrantes()
 
     
     
