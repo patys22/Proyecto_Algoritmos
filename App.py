@@ -1,5 +1,6 @@
 from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta, cargarNaves, cargarVehiculos
 from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas, buscar_personajes
+from Usuario import Usuario
 
 class App:
     def start(self):
@@ -56,3 +57,5 @@ class App:
                 break
             elif menu > 13: 
                 print('Ingrese una opcion valida')
+
+    
