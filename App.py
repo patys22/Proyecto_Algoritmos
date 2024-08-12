@@ -1,5 +1,5 @@
 from infoAPI import cargarPelis, cargarEspecies, cargarPersonajes, cargarPlaneta, cargarNaves, cargarVehiculos
-from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas, buscar_personajes
+from funciones import mostrar_peliculas, mostrar_especies, mostrar_planetas, buscar_personajes, estadistica_Nave, caracteristica_Nave, persona_Planeta, personaje_csv
 import csv
 from Usuario import Usuario
 from Mision import Mision
@@ -26,10 +26,12 @@ class App:
 
     def start(self):
         
-        # listaPeliculas = cargarPelis()
-        # listaEspecies = cargarEspecies()
-        # listaPersonajes = cargarPersonajes()
-        # listaPlanetas = cargarPlaneta()
+        listaPeliculas = cargarPelis()
+        listaEspecies = cargarEspecies()
+        listaPersonajes = cargarPersonajes()
+        listaPlanetas = cargarPlaneta()
+        listaNaves = cargarNaves()
+        listaVehiculos = cargarVehiculos()
 
         while True:
             try:
@@ -43,17 +45,10 @@ class App:
                 listaPeliculas = cargarPelis()
                 mostrar_peliculas(listaPeliculas)
             elif menu==2:
-                # mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanetas)
-                None
+                mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanetas)
             elif menu==3:
-                # mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
-                None
+                mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
             elif menu==4:
-                listaPeliculas = cargarPelis()
-                listaPersonajes = cargarPersonajes()
-                listaEspecies = cargarEspecies()
-                listaNaves = cargarNaves()
-                listaVehiculos = cargarVehiculos()
                 while True:
                     personaje_ingresado = input("\nIngrese el nombre del personaje que desea buscar y si desea regresar al menu ingrese 0: \n---> ")
                     if personaje_ingresado == "0":
@@ -61,11 +56,12 @@ class App:
                     else:
                         busqueda = buscar_personajes(listaPersonajes, personaje_ingresado, listaNaves, listaPeliculas, listaEspecies, listaVehiculos)
             elif menu==5:
-                None
+                info = personaje_csv()
+                persona_Planeta(info)
             elif menu==6:
-                None
+                caracteristica_Nave()
             elif menu==7:
-                None
+                estadistica_Nave()
             elif menu==8:
                 self.construir_mision()
                 self.gestionar_misiones()
@@ -74,7 +70,7 @@ class App:
             elif menu==10:
                 self.visualizar_mision()
             elif menu==11:
-                print("\nVuelva pronto y que la fuerza te acompane")
+                print("\nVuelva pronto y que la fuerza te acompañe")
                 break
             elif menu <= 0 and menu > 11: 
                 print('Ingrese una opcion valida')

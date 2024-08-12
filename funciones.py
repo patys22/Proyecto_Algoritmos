@@ -26,9 +26,9 @@ def mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanet
                 if personaje == p.url:
                     listaNombres.append(p.nombre)
 
-        personaje_planeta = rq.get(personaje.planeta_origen).json()
-        nombrePlaneta = personaje_planeta['result']['properties']['name']
-
+        for planeta in listaPlanetas: #trae los 
+            if especie_planeta == planeta.url:
+                nombrePlaneta = planeta.nombre
 
 
         for pelicula in listaPeliculas:
@@ -138,8 +138,6 @@ def persona_Planeta(info): #trae el grafico de la cantidad de personajes por pla
     fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
     mpl.show() 
 
-info = personaje_csv()
-persona_Planeta(info)
 
 def caracteristica_Nave():
     while True:
@@ -229,7 +227,6 @@ def caracteristica_Nave():
         else: 
             print("Ingrese un valor valido, tiene que ingresar un numero del 1 al 5")
 
-#caracteristica_Nave()
 
 def estadistica_Nave():
     caminoArchivo = 'starships.csv'
