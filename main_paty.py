@@ -1,5 +1,5 @@
-from funciones_paty import App
+from funciones_paty import App_paty
 def main():
-    app=App()
+    app=App_paty()
     app.start()
 main()

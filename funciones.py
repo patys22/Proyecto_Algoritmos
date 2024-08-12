@@ -273,4 +273,3 @@ def estadistica_Nave():
     cuadro["Minimo"] = np.array(lista_min)    
     print(cuadro)
 
-estadistica_Nave()

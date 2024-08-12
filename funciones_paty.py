@@ -5,9 +5,8 @@ from Planeta_csv import Planeta_csv
 from Nave_csv import Nave_csv
 from Armas_csv import Armas_csv
 from Integrantes_csv import Integrantes_csv
-from Planetas import Planetas
 
-class App:
+class App_paty:
     usuarios_obj=[]
     misiones_obj=[]
 
@@ -78,7 +77,12 @@ class App:
             print(f'\t{contador}-{planeta.nombre}')
             contador+=1
         planeta_seleccionado=int(input("--> "))
-        return lista_planetas[planeta_seleccionado-1]
+        if planeta_seleccionado > 0 and planeta_seleccionado <= len(lista_planetas):
+            return lista_planetas[planeta_seleccionado-1]
+        else:
+            print("Selección inválida.")
+            return self.seleccionar_planeta()
+        
     
     def seleccionar_nave(self):
         lista_naves = []
@@ -106,16 +110,27 @@ class App:
                         fila['id'], fila['name']
                     )
                 lista_armas.append(arma)
-        print(f"\nSeleccione hasta 7 armas:")
+        print("\nSeleccione hasta 7 armas:")
         contador = 1
         for arma in lista_armas:
             print(f'\t{contador}-{arma.nombre}')
             contador+=1
-        indices_seleccionados = input(f"Ingrese las armas que desea seleccionar separadas por comas: ").split(",")
-        armas_seleccionadas = [lista_armas[int(index) - 1] for index in indices_seleccionados if 0 < int(index) <= len(lista_armas)]
-        if len(armas_seleccionadas) > 7:
-            print(f"\nSolo puedes seleccionar hasta 7 armas")
+        try:
+            indices_seleccionados = input("Ingrese las armas que desea seleccionar separadas por comas: ").split(",")
+            armas_seleccionadas = []
+            for index in indices_seleccionados:
+                num = int(index.strip())
+                if num > 0 and num <= len(lista_armas):
+                    armas_seleccionadas.append(lista_armas[num - 1])
+                else:
+                    print("\nIngrese solo números válidos")
+                    return self.seleccionar_armas()
+        except ValueError:
+            print("\nIngrese solo números válidos")
             return self.seleccionar_armas()
+        if len(armas_seleccionadas) > 7:
+           print("\nSolo puedes seleccionar hasta 7 armas")
+           return self.seleccionar_armas()
         return armas_seleccionadas
         
     def seleccionar_integrantes(self):
@@ -148,24 +163,28 @@ class App:
             mision = self.construir_mision()
             misiones_obj.append(mision)
             print(f"Mision '{mision['nombre_mision']}' creada con exito")
-       
-    def visualizar_mision(self):
-        if len(self.misiones_obj) == 0:
-            print("No tienes misiones registradas")
-            return
-        print("Misiones disponibles:")
-        contador = 1
-        for mision in self.misiones_obj:
-            print(f"{contador}. {mision['nombre_mision']}")
-            contador += 1
-        seleccion = int(input("Ingrese el número de la misión que desea ver--> "))
-        if seleccion > 0 and seleccion <= len(self.misiones_obj):
-            mision = self.misiones_obj[seleccion - 1]
-            self.mostrar_detalles_mision(mision)
-        else:
-            print("Selección inválida.")
 
-    def mostrar_detalles_mision(self, mision):
+    def acceder_misiones(self):
+        cedula = int(input("Ingrese su cédula para acceder a sus misiones: "))
+        misiones_usuario = self.buscar_misiones_por_cedula(cedula)
+        
+        if not misiones_usuario:
+            print("No se encontraron misiones para esta cédula.")
+            return self.acceder_misiones()
+        else:
+            print("\nMisiones disponibles:")
+            contador=1
+            for mision in misiones_usuario:
+                print(f'\t{contador}-{mision.nombre}')
+                contador+=1
+            mision_seleccionada=int(input("Ingrese el número de la misión para ver los detalles--> "))
+            if mision_seleccionada > 0 and mision_seleccionada <= len(misiones_usuario):
+                    mision_seleccionada.append(misiones_usuario[mision_seleccionada - 1])
+            else:
+                print("\nIngrese solo números válidos")
+                return self.acceder_misiones()
+            
+    def ver_mision(self, mision):
         print("\nDetalles de la Misión:")
         print(f"Nombre de la misión: {mision['nombre_mision']}")
         print(f"Planeta destino: {mision['planeta'].nombre}")
@@ -177,6 +196,16 @@ class App:
         for integrante in mision['integrantes']:
             print(f"- {integrante.nombre}")
 
+    def buscar_mision_lineal(self, cedula):
+            for mision in self.misiones_obj:
+                if mision.cedula==cedula:
+                    return mision
+            return None
+
+    def buscar_misiones_por_cedula(self, cedula):
+        misiones_usuario = [mision for mision in self.misiones_obj if mision['cedula'] == cedula]
+        return misiones_usuario
+    
     def modificar_mision(self):
         if len(self.misiones_obj) == 0:
             print("No tienes misiones registradas para modificar")
@@ -205,7 +234,7 @@ class App:
                   4. Eliminar armas
                   5. Agregar integrantes
                   6. Eliminar integrantes
-                  6. Finalizar edición''')
+                  7. Finalizar edición''')
             opcion = input("Ingrese una opción--> ")
 
             if opcion == '1':
@@ -263,7 +292,7 @@ class App:
         mision['integrantes'] = [integrante for i, integrante in enumerate(mision['integrantes']) if i not in indices]
         print("Integrantes eliminados correctamente.")
 
-    def seleccionar_integrantes(self):
+    def seleccionar_integrantes_nuevos(self):
         self.seleccionar_integrantes()
 
     
