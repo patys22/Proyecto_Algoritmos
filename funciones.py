@@ -26,7 +26,7 @@ def mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanet
                 if personaje == p.url:
                     listaNombres.append(p.nombre)
 
-        for planeta in listaPlanetas: #trae los 
+        for planeta in listaPlanetas: #trae los nombres de los planetas 
             if especie_planeta == planeta.url:
                 nombrePlaneta = planeta.nombre
 
@@ -228,7 +228,7 @@ def caracteristica_Nave():
             print("Ingrese un valor valido, tiene que ingresar un numero del 1 al 5")
 
 
-def estadistica_Nave():
+def estadistica_Nave(): #menu 7
     caminoArchivo = 'starships.csv'
     infoNave = pd.read_csv(caminoArchivo)
     
@@ -269,4 +269,3 @@ def estadistica_Nave():
     cuadro["Maximo"] = np.array(lista_max)
     cuadro["Minimo"] = np.array(lista_min)    
     print(cuadro)
-

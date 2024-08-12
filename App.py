@@ -24,7 +24,7 @@ class App:
     misiones_obj=[]
     misiones_usuarios={}
 
-    def start(self):
+    def start(self): #Creacion del menu principal
         
         listaPeliculas = cargarPelis()
         listaEspecies = cargarEspecies()
@@ -49,12 +49,7 @@ class App:
             elif menu==3:
                 mostrar_planetas(listaPeliculas, listaPlanetas, listaPersonajes)
             elif menu==4:
-                while True:
-                    personaje_ingresado = input("\nIngrese el nombre del personaje que desea buscar y si desea regresar al menu ingrese 0: \n---> ")
-                    if personaje_ingresado == "0":
-                        break
-                    else:
-                        busqueda = buscar_personajes(listaPersonajes, personaje_ingresado, listaNaves, listaPeliculas, listaEspecies, listaVehiculos)
+                self.menu_4(listaPersonajes, listaNaves,listaPeliculas, listaEspecies, listaVehiculos)  
             elif menu==5:
                 info = personaje_csv()
                 persona_Planeta(info)
@@ -70,13 +65,20 @@ class App:
             elif menu==10:
                 self.visualizar_mision()
             elif menu==11:
-                print("\nVuelva pronto y que la fuerza te acompañe")
+                print("\nVuelva pronto y que la fuerza te acompañe\n")
                 break
             elif menu <= 0 and menu > 11: 
                 print('Ingrese una opcion valida')
 
-    
 
+
+    def menu_4(self, listaPersonajes, listaNaves,listaPeliculas, listaEspecies, listaVehiculos): #funcion de trae los personajes buscados
+        while True:
+            personaje_ingresado = input("\nIngrese el nombre del personaje que desea buscar y si desea regresar al menu ingrese 0: \n---> ")
+            if personaje_ingresado == "0":
+                break
+            else:
+                busqueda = buscar_personajes(listaPersonajes, personaje_ingresado, listaNaves, listaPeliculas, listaEspecies, listaVehiculos)
 
     def construir_mision(self):
         print("Ingrese sus datos para poder construir una mision: ")
@@ -318,7 +320,7 @@ class App:
     def modificar_integrantes(self, mision):
         print("\nIntegrantes actuales:")
         contador = 1
-        for integrante in mision['integrates']:
+        for integrante in mision['integrantes']:
             print(f'\t{contador}-{integrante.nombre}')
             contador += 1
         print("\n¿Qué desea hacer?\n1. Agregar integrantes\n2. Eliminar integrantes")
@@ -326,15 +328,17 @@ class App:
         if opcion == 1:
             nuevos_integrantes = self.seleccionar_integrantes()
             mision['integrantes'].extend(nuevos_integrantes)
+            print("integrante agregado correctamente")
         elif opcion == 2:
             contador = 1
-            for integrante in mision['integrates']:
+            for integrante in mision['integrantes']:
                 print(f'\t{contador}-{integrante.nombre}')
                 contador += 1
             integrantes_a_eliminar = input("Ingrese los números de los integrantes a eliminar, separadas por comas: ").split(",")
+            print('Integrante eliminado correctamente')
             indices_a_eliminar = [int(index.strip()) - 1 for index in integrantes_a_eliminar]
-        for index in sorted(indices_a_eliminar, reverse=True):
-                if index > 0 and index <= len(mision['integrantes']):
+            for index in sorted(indices_a_eliminar, reverse=True):
+                if index >= 0 and index <= len(mision['integrantes']):
                     del mision['integrantes'][index]
                 else:
                     print(f"Índice {index + 1} fuera de rango.")
