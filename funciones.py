@@ -1,4 +1,7 @@
 import requests as rq
+import pandas as pd
+import matplotlib.pyplot as mpl
+import numpy as np
 
 def mostrar_peliculas(listaPeliculas):
     contador = 1
@@ -22,9 +25,11 @@ def mostrar_especies(listaEspecies, listaPeliculas, listaPersonajes, listaPlanet
             for p in listaPersonajes:
                 if personaje == p.url:
                     listaNombres.append(p.nombre)
-        for planeta in listaPlanetas: #trae los 
-            if especie_planeta == planeta.url:
-                nombrePlaneta = planeta.nombre
+
+        personaje_planeta = rq.get(personaje.planeta_origen).json()
+        nombrePlaneta = personaje_planeta['result']['properties']['name']
+
+
 
         for pelicula in listaPeliculas:
             for urlEspecie in pelicula.especies:
@@ -60,13 +65,14 @@ def buscar_personajes(listaPersonaje, personaje_ingresado, listaNaves, listaPeli
     for personaje in listaPersonaje:
         personaje_nombre = personaje.nombre.lower()
         
-        #trae planeta origen del personaje 
+        
         if personaje_ingresado.lower() in personaje_nombre:
             print(f'{contador}.- {personaje.nombre}')
             personajes[contador] =  personaje
             contador += 1
+
             personaje_planeta = rq.get(personaje.planeta_origen).json()
-            nombrePlaneta = personaje_planeta['result']['properties']['name'] #trae el nombre planeta de origen
+            nombrePlaneta = personaje_planeta['result']['properties']['name'] #trae el nombre planeta de origen del personaje 
 
             for especie in listaEspecies: #trae la especie del personaje
                 for urlPersonaje in especie.personaje_especie:
@@ -105,3 +111,166 @@ def buscar_personajes(listaPersonaje, personaje_ingresado, listaNaves, listaPeli
             print('Introduzca un valor valido')
         errorAux: True
     
+###############################################################################################################
+#Empece a trabajar con las csv para menu 5, 6 y 7
+
+def personaje_csv(): #trae informacion de personaje de csv
+    caminoArchivo = 'characters.csv'
+    info = pd.read_csv(caminoArchivo)
+    return info 
+
+
+def persona_Planeta(info): #trae el grafico de la cantidad de personajes por planeta de origen
+    personajeXplaneta = info.groupby('homeworld').size() 
+    personajeXplaneta_dict = personajeXplaneta.to_dict()
+
+    nombrePlaneta = list(personajeXplaneta_dict.keys())
+    numNacidos = list(personajeXplaneta_dict.values())
+    fig, ax = mpl.subplots(figsize=(10,7))
+
+    ax.bar(nombrePlaneta, numNacidos)
+    ax.set_xlabel('Planeta de Origen')
+    ax.set_ylabel('Cantidad de Personajes')
+    ax.set_title('Cantidad de Personajes por Planeta de Origen')
+    ax.set_xticks(range(len(nombrePlaneta)))  #Establece las posiciones de los ticks
+    ax.set_xticklabels(nombrePlaneta, rotation=45, ha='right') # Rotacion de los nombres de los planetas
+
+    fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
+    mpl.show() 
+
+info = personaje_csv()
+persona_Planeta(info)
+
+def caracteristica_Nave():
+    while True:
+        submenu = int(input("Ingrese el numero del grafico desea consultar: \n\n1. Longirud de la nave\n2. Capacidad de carga\n3. Clasificacion de hiperimpulsor\n4. MGLT (Modern Galactic Light Time)\n5. Salir\n\t----> "))
+        if submenu == 1: #trae el grafico de longitud por nave
+            caminoArchivo = 'starships.csv'
+            infoNave = pd.read_csv(caminoArchivo)
+
+            longitudXnave_dict = pd.Series(infoNave.length.values, index=infoNave.name).to_dict()
+
+            nombreNave = list(longitudXnave_dict.keys())
+            longitud = list(longitudXnave_dict.values())
+            fig, ax = mpl.subplots(figsize=(10,7))
+
+            ax.bar(nombreNave, longitud)
+            ax.set_xlabel('Nombre de la nave')
+            ax.set_ylabel('Longitud')
+            ax.set_title('Longitud por nave')
+            ax.set_xticks(range(len(nombreNave)))  #Establece las posiciones de los ticks
+            ax.set_xticklabels(nombreNave, rotation=45, ha='right') # Rotacion de los nombres de las naves
+
+            fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
+            mpl.show()
+
+        elif submenu == 2: #trae el grafico de capacidad por nave
+            caminoArchivo = 'starships.csv'
+            infoNave = pd.read_csv(caminoArchivo)
+
+            capacidadXnave_dict = pd.Series(infoNave.cargo_capacity.values, index=infoNave.name).to_dict()
+
+            nombreNave = list(capacidadXnave_dict.keys())
+            capacidad = list(capacidadXnave_dict.values())
+            fig, ax = mpl.subplots(figsize=(10,7))
+
+            ax.bar(nombreNave, capacidad)
+            ax.set_xlabel('Nombre de la nave')
+            ax.set_ylabel('Capacidad')
+            ax.set_title('Capacidad por nave')
+            ax.set_xticks(range(len(nombreNave)))  #Establece las posiciones de los ticks
+            ax.set_xticklabels(nombreNave, rotation=45, ha='right') # Rotacion de los nombres de las naves
+
+            fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
+            mpl.show()
+            
+        elif submenu == 3: 
+            caminoArchivo = 'starships.csv'
+            infoNave = pd.read_csv(caminoArchivo)
+
+            hiperimpulsorXnave_dict = pd.Series(infoNave.hyperdrive_rating.values, index=infoNave.name).to_dict()
+
+            nombreNave = list(hiperimpulsorXnave_dict.keys())
+            hiperimpulsor = list(hiperimpulsorXnave_dict.values())
+            fig, ax = mpl.subplots(figsize=(10,7))
+
+            ax.bar(nombreNave, hiperimpulsor)
+            ax.set_xlabel('Nombre de la nave')
+            ax.set_ylabel('Clasificacion del hiperimpulsor')
+            ax.set_title('Clasificacion del hiperimpulsor por nave')
+            ax.set_xticks(range(len(nombreNave)))  #Establece las posiciones de los ticks
+            ax.set_xticklabels(nombreNave, rotation=45, ha='right') # Rotacion de los nombres de las naves
+
+            fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
+            mpl.show()
+            
+        elif submenu == 4:
+            caminoArchivo = 'starships.csv'
+            infoNave = pd.read_csv(caminoArchivo)
+
+            mgltXnave_dict = pd.Series(infoNave.MGLT.values, index=infoNave.name).to_dict()
+
+            nombreNave = list(mgltXnave_dict.keys())
+            mglt = list(mgltXnave_dict.values())
+            fig, ax = mpl.subplots(figsize=(10,7))
+
+            ax.bar(nombreNave, mglt)
+            ax.set_xlabel('Nombre de la nave')
+            ax.set_ylabel('Modern Galactic Light Time')
+            ax.set_title('Modern Galactic Light Time por nave')
+            ax.set_xticks(range(len(nombreNave)))  #Establece las posiciones de los ticks
+            ax.set_xticklabels(nombreNave, rotation=45, ha='right') # Rotacion de los nombres de las naves
+
+            fig.tight_layout()  # Ajustar el layout para que no se sobrepongan las etiquetas
+            mpl.show()
+            
+        elif submenu == 5:
+            break
+        else: 
+            print("Ingrese un valor valido, tiene que ingresar un numero del 1 al 5")
+
+#caracteristica_Nave()
+
+def estadistica_Nave():
+    caminoArchivo = 'starships.csv'
+    infoNave = pd.read_csv(caminoArchivo)
+    
+    #Estadisticas de clasificacion de hiperimpulsor 
+    minHiperimpulsor = pd.Series(infoNave.hyperdrive_rating.values).min()
+    maxHiperimpulsor = pd.Series(infoNave.hyperdrive_rating.values).max()
+    promHiperimpulsor = pd.Series(infoNave.hyperdrive_rating.values).mean()
+    modaHiperimpulsor = pd.Series(infoNave.hyperdrive_rating.values).mode().iloc[0]
+
+    #Estadisticas de MGTL
+    minMGTL = pd.Series(infoNave.MGLT.values).min()
+    maxMGTL = pd.Series(infoNave.MGLT.values).max()
+    promMGTL = pd.Series(infoNave.MGLT.values).mean()
+    modaMGTL = pd.Series(infoNave.MGLT.values).mode().iloc[0]
+
+    #Estadisticas de la velocidad maxima en atmosfera 
+    minVelocidad = pd.Series(infoNave.max_atmosphering_speed.values).min()
+    maxVelocidad = pd.Series(infoNave.max_atmosphering_speed.values).max()
+    promVelocidad = pd.Series(infoNave.max_atmosphering_speed.values).mean()
+    modaVelocidad = pd.Series(infoNave.max_atmosphering_speed.values).mode().iloc[0]
+
+    #Estadisticas de costos en creditos
+    minCosto = pd.Series(infoNave.cost_in_credits.values).min()
+    maxCosto = pd.Series(infoNave.cost_in_credits.values).max()
+    promCosto = pd.Series(infoNave.cost_in_credits.values).mean()
+    modaCosto = pd.Series(infoNave.cost_in_credits.values).mode().iloc[0]
+
+    lista_min = [minHiperimpulsor, minMGTL, minVelocidad, minCosto]
+    lista_max = [maxHiperimpulsor, maxMGTL, maxVelocidad, maxCosto]
+    lista_prom = [promHiperimpulsor, promMGTL, promVelocidad, promCosto]
+    lista_moda = [modaHiperimpulsor, modaMGTL, modaVelocidad, modaCosto]
+
+    cuadro = pd.DataFrame(columns=["Caracteristicas", "Promedio", "Moda", "Maximo", "Minimo"])
+    caracteristcas = ["Clasificacion de Hiperimpulsor", "Modern Galactic Light Time", "Velocidad maxima de atmosfera", "Costo en creditos"]
+    cuadro["Caracteristicas"] = np.array(caracteristcas)
+    cuadro["Promedio"] = np.array(lista_prom)
+    cuadro["Moda"] = np.array(lista_moda)
+    cuadro["Maximo"] = np.array(lista_max)
+    cuadro["Minimo"] = np.array(lista_min)    
+    print(cuadro)
+
+estadistica_Nave()
