@@ -89,7 +89,7 @@ def cargarEspecies(): #buscar caracteristicas de las especies
 
 def cargarPersonajes(): #buscar caracteristicas de los personajes y toda la info que piden 
     listaPersonajes = []
-    personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=10').json()
+    personajesdb = rq.get('https://www.swapi.tech/api/people?page=1&limit=90').json()
     for results in personajesdb['results']:
         personajeInfo = rq.get(results['url']).json()
         url = results['url']
@@ -100,17 +100,3 @@ def cargarPersonajes(): #buscar caracteristicas de los personajes y toda la info
         nuevoPersonaje=Personaje(nombre, planetaOrigen, genero, url, uid)
         listaPersonajes.append(nuevoPersonaje)
     return listaPersonajes
-
-
-
-
-    
-
-
-    
-
-
-    
-
-        
-        
